@@ -1,6 +1,6 @@
 ﻿using System;
 
-var day = args[0];
+var day = args.Length < 1 ? string.Empty : args[0];
 
 // read input if available
 var binDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
@@ -19,6 +19,16 @@ switch (day) {
     case "1-2":
         Console.WriteLine("--- Day 1: Part Two ---");
         Console.WriteLine(Day1.RunPartII(input));
+        Console.WriteLine($"Finished in ({stopwatch.ElapsedMilliseconds}) ms");
+        break;
+    case "2":
+        Console.WriteLine("--- Day 2: Password Philosophy ---");
+        Console.WriteLine(Day2.Run(input));
+        Console.WriteLine($"Finished in ({stopwatch.ElapsedMilliseconds}) ms");
+        break;
+    case "2-2":
+        Console.WriteLine("--- Day 2: Part Two ---");
+        Console.WriteLine(Day2.RunPartII(input));
         Console.WriteLine($"Finished in ({stopwatch.ElapsedMilliseconds}) ms");
         break;
     default:
