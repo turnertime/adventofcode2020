@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 
 internal static class Day1
@@ -32,7 +32,7 @@ internal static class Day1
                 {
                     if (numbers[i] + numbers[j] + numbers[k] == 2020)
                     {
-                        partIIAnswer = $"{numbers[i] * numbers[j] *  numbers[k]}";
+                        partIIAnswer = $"{numbers[i] * numbers[j] * numbers[k]}";
                         break;
                     }
                 }

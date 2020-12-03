@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -17,7 +17,8 @@ internal static class Day2
                 max: int.Parse(pattern.Groups["max"].Value),
                 character: pattern.Groups["character"].Value[0],
                 password: pattern.Groups["password"].Value))
-            .Count(pattern => {
+            .Count(pattern =>
+            {
                 var occurrences = pattern.password.Count(c => c == pattern.character);
                 return occurrences >= pattern.min && occurrences <= pattern.max;
             });
@@ -30,13 +31,14 @@ internal static class Day2
                 second: int.Parse(pattern.Groups["max"].Value),
                 character: pattern.Groups["character"].Value[0],
                 password: pattern.Groups["password"].Value))
-            .Count(pattern => {
+            .Count(pattern =>
+            {
                 var first = pattern.character == pattern.password[pattern.first - 1] ? 1 : 0;
                 var second = pattern.character == pattern.password[pattern.second - 1] ? 1 : 0;
 
                 return first + second == 1;
             });
-        
+
         Console.WriteLine($"Part  I: {partIAnswer}");
         Console.WriteLine($"Part II: {partIIAnswer}");
     }
