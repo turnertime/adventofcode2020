@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -7,9 +8,9 @@ internal static class Day2
     /// <summary>
     /// <a href="https://adventofcode.com/2020/day/2">Day 2</a>: Password Philosophy
     /// </summary>
-    public static string Run(string[] lines)
+    public static void Run(string[] lines)
     {
-        var validCount = lines
+        var partIAnswer = lines
             .Select(line => PasswordPattern.Match(line))
             .Select(pattern => (
                 min: int.Parse(pattern.Groups["min"].Value),
@@ -20,11 +21,9 @@ internal static class Day2
                 var occurrences = pattern.password.Count(c => c == pattern.character);
                 return occurrences >= pattern.min && occurrences <= pattern.max;
             });
-        return $"{validCount}";
-    }
 
-    public static string RunPartII(string[] lines) {
-        var validCount = lines
+
+        var partIIAnswer = lines
             .Select(line => PasswordPattern.Match(line))
             .Select(pattern => (
                 first: int.Parse(pattern.Groups["min"].Value),
@@ -37,7 +36,9 @@ internal static class Day2
 
                 return first + second == 1;
             });
-        return $"{validCount}";
+        
+        Console.WriteLine($"Part  I: {partIAnswer}");
+        Console.WriteLine($"Part II: {partIIAnswer}");
     }
 
     private static Regex PasswordPattern = new Regex(

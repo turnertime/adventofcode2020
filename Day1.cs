@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 internal static class Day1
@@ -6,8 +7,9 @@ internal static class Day1
     /// <summary>
     /// <a href="https://adventofcode.com/2020/day/1">Day 1</a>: Report Repair
     /// </summary>
-    public static string Run(string[] input)
+    public static void Run(string[] input)
     {
+        var partIAnswer = "Inconclusive";
         var numbers = input.Select(int.Parse).ToArray();
         for (var i = 0; i < numbers.Length; i++)
         {
@@ -15,17 +17,13 @@ internal static class Day1
             {
                 if (numbers[i] + numbers[j] == 2020)
                 {
-                    return $"{numbers[i] * numbers[j]}";
+                    partIAnswer = $"{numbers[i] * numbers[j]}";
+                    break;
                 }
             }
         }
-        System.Console.Beep();
-        return "Inconclusive!";
-    }
 
-    public static string RunPartII(string[] input)
-    {
-        var numbers = input.Select(int.Parse).ToArray();
+        var partIIAnswer = "Inconclusive";
         for (var i = 0; i < numbers.Length; i++)
         {
             for (var j = 1; j < numbers.Length; j++)
@@ -34,13 +32,15 @@ internal static class Day1
                 {
                     if (numbers[i] + numbers[j] + numbers[k] == 2020)
                     {
-                        return $"{numbers[i] * numbers[j] *  numbers[k]}";
+                        partIIAnswer = $"{numbers[i] * numbers[j] *  numbers[k]}";
+                        break;
                     }
                 }
             }
         }
-        System.Console.Beep();
-        return "Inconclusive!";
+
+        Console.WriteLine($"Part I:  {partIAnswer}");
+        Console.WriteLine($"Part II: {partIIAnswer}");
     }
 
 }
