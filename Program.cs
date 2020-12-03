@@ -2,15 +2,19 @@
 using System.Diagnostics;
 using System.IO;
 
-var day = args.Length < 1 ? string.Empty : args[0];
+var rawDay = args.Length < 1 ? string.Empty : args[0];
+if (!int.TryParse(rawDay, out var day)){
+    Console.WriteLine("Specified must be an integer");
+    return;
+}
 
 // read input if available
 var binDirectory = AppDomain.CurrentDomain.BaseDirectory;
-var path = Path.Combine(binDirectory, $"../../../input/Day{day}.txt");
+var path = Path.Combine(binDirectory, $"../../../input/Day{day:00}.txt");
 if (!File.Exists(path))
 {
-    Console.WriteLine($"Day {day} input not found", Console.Error);
-    return -1;
+    Console.WriteLine($"Day {rawDay} input not found", Console.Error);
+    return;
 }
 
 var input = File.Exists(path)
@@ -20,26 +24,24 @@ var input = File.Exists(path)
 var stopwatch = Stopwatch.StartNew();
 switch (day)
 {
-    case "1":
+    case 1:
         Console.WriteLine("--- Day 1: Report Repair ---");
-        Day1.Run(input);
-        Console.WriteLine($"Finished in ({stopwatch.ElapsedMilliseconds}) ms");
-        return 0;
-    case "2":
+        Day01.Run(input);
+        break;
+    case 2:
         Console.WriteLine("--- Day 2: Password Philosophy ---");
-        Day2.Run(input);
-        Console.WriteLine($"Finished in ({stopwatch.ElapsedMilliseconds}) ms");
-        return 0;
-    case "3":
+        Day02.Run(input);
+        break;
+    case 3:
         Console.WriteLine("--- Day 3: TBD ---");
-        Day2.Run(input);
-        Console.WriteLine($"Finished in ({stopwatch.ElapsedMilliseconds}) ms");
-        return 0;
+        Day02.Run(input);
+        break;
     default:
         Console.WriteLine(
-            string.IsNullOrWhiteSpace(day)
-                ? $"Day '{day}', was not found."
+            string.IsNullOrWhiteSpace(rawDay)
+                ? $"Day '{rawDay}', was not found."
                 : "Please specify day such as '1' or '3'",
             Console.Error);
-        return -1;
+        return;
 }
+Console.WriteLine($"Finished in ({stopwatch.ElapsedMilliseconds}) ms");

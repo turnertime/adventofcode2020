@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-internal static class Day1
+internal static class Day01
 {
 
     /// <summary>
@@ -39,7 +39,7 @@ internal static class Day1
             }
         }
 
-        Console.WriteLine($"Part I:  {partIAnswer}");
+        Console.WriteLine($"Part  I: {partIAnswer}");
         Console.WriteLine($"Part II: {partIIAnswer}");
     }
 
