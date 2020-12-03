@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -31,16 +32,11 @@ internal static class Day03
 
     private static long Traverse(Move move, string[] lines)
     {
-        var position = 0;
-        long count = 0;
-        for (var i = move.Down; i < lines.Length; i += move.Down)
-        {
-            var line = lines[i];
-            position += move.Right;
-            var remainder = position % line.Length;
-            if (line[remainder] == '#') { count++; }
-        }
-        return count;
+        var length = lines[0].Length;
+        return Enumerable
+            .Range(1, Math.DivRem(lines.Length, move.Down, out _) - 1)
+            .Select(i => new Move(move.Down * i, move.Right * i))
+            .Count(x => lines[x.Down][x.Right % length] == '#');
     }
 
 }
