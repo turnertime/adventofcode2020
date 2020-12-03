@@ -36,6 +36,10 @@ switch (day)
         Console.WriteLine($"Finished in ({stopwatch.ElapsedMilliseconds}) ms");
         return 0;
     default:
-        Console.WriteLine($"Day '{day}', was not found.", Console.Error);
+        Console.WriteLine(
+            string.IsNullOrWhiteSpace(day)
+                ? $"Day '{day}', was not found."
+                : "Please specify day such as '1' or '3'",
+            Console.Error);
         return -1;
 }
