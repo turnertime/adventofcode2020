@@ -2,9 +2,11 @@
 using System.Diagnostics;
 using System.IO;
 
+// validate day
 var rawDay = args.Length < 1 ? string.Empty : args[0];
-if (!int.TryParse(rawDay, out var day)){
-    Console.WriteLine("Specified must be an integer");
+if (!int.TryParse(rawDay, out var day) || day < 1 || day > 31)
+{
+    Console.WriteLine("Specified day must be between 1-30");
     return;
 }
 
@@ -17,9 +19,7 @@ if (!File.Exists(path))
     return;
 }
 
-var input = File.Exists(path)
-    ? File.ReadAllLines(path)
-    : new string[0];
+var input = File.Exists(path) ? File.ReadAllLines(path) : new string[0];
 
 var stopwatch = Stopwatch.StartNew();
 switch (day)
@@ -33,15 +33,11 @@ switch (day)
         Day02.Run(input);
         break;
     case 3:
-        Console.WriteLine("--- Day 3: TBD ---");
-        Day02.Run(input);
+        Console.WriteLine("--- Day 3: Toboggan Trajectory ---");
+        Day03.Run(input);
         break;
     default:
-        Console.WriteLine(
-            string.IsNullOrWhiteSpace(rawDay)
-                ? $"Day '{rawDay}', was not found."
-                : "Please specify day such as '1' or '3'",
-            Console.Error);
+        Console.WriteLine($"Day '{rawDay}', has not been solved yet.", Console.Error);
         return;
 }
 Console.WriteLine($"Finished in ({stopwatch.ElapsedMilliseconds}) ms");
