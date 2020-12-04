@@ -41,6 +41,10 @@ switch (day)
         Console.WriteLine("--- Day 3: Toboggan Trajectory ---");
         solution = Day03.Run(input);
         break;
+    case 4:
+        Console.WriteLine("--- Day 4: Passport Processing ---");
+        solution = Day04.Run(input);
+        break;
     default:
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine($"Day '{rawDay}', has not been solved yet.");
