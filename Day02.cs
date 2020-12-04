@@ -8,9 +8,9 @@ internal static class Day02
     /// <summary>
     /// <a href="https://adventofcode.com/2020/day/2">Day 2</a>: Password Philosophy
     /// </summary>
-    public static void Run(string[] lines)
+    public static Solution Run(string[] lines)
     {
-        var partIAnswer = lines
+        var partA = lines
             .Select(line => PasswordPattern.Match(line))
             .Select(pattern => (
                 min: int.Parse(pattern.Groups["min"].Value),
@@ -24,7 +24,7 @@ internal static class Day02
             });
 
 
-        var partIIAnswer = lines
+        var partB = lines
             .Select(line => PasswordPattern.Match(line))
             .Select(pattern => (
                 first: int.Parse(pattern.Groups["min"].Value),
@@ -39,8 +39,7 @@ internal static class Day02
                 return first + second == 1;
             });
 
-        Console.WriteLine($"Part  I: {partIAnswer}");
-        Console.WriteLine($"Part II: {partIIAnswer}");
+        return new Solution(partA, partB);
     }
 
     private static Regex PasswordPattern = new Regex(

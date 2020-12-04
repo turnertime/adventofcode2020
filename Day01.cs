@@ -7,9 +7,9 @@ internal static class Day01
     /// <summary>
     /// <a href="https://adventofcode.com/2020/day/1">Day 1</a>: Report Repair
     /// </summary>
-    public static void Run(string[] input)
+    public static Solution Run(string[] input)
     {
-        var partIAnswer = "Inconclusive";
+        var partA = -1;
         var numbers = input.Select(int.Parse).ToArray();
         for (var i = 0; i < numbers.Length; i++)
         {
@@ -17,13 +17,13 @@ internal static class Day01
             {
                 if (numbers[i] + numbers[j] == 2020)
                 {
-                    partIAnswer = $"{numbers[i] * numbers[j]}";
+                    partA = numbers[i] * numbers[j];
                     break;
                 }
             }
         }
 
-        var partIIAnswer = "Inconclusive";
+        var partB = -1;
         for (var i = 0; i < numbers.Length; i++)
         {
             for (var j = 1; j < numbers.Length; j++)
@@ -32,15 +32,14 @@ internal static class Day01
                 {
                     if (numbers[i] + numbers[j] + numbers[k] == 2020)
                     {
-                        partIIAnswer = $"{numbers[i] * numbers[j] * numbers[k]}";
+                        partB = numbers[i] * numbers[j] * numbers[k];
                         break;
                     }
                 }
             }
         }
 
-        Console.WriteLine($"Part  I: {partIAnswer}");
-        Console.WriteLine($"Part II: {partIIAnswer}");
+        return new Solution(partA, partB);
     }
 
 }
