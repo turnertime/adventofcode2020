@@ -39,7 +39,7 @@ internal static class Day02
                 return first + second == 1;
             });
 
-        return new Solution(partA, partB);
+        return new Solution($"{partA}", $"{partB}");
     }
 
     private static Regex PasswordPattern = new Regex(

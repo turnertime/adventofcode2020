@@ -51,7 +51,7 @@ internal static class Day04
             .Count(passport => validationRules
                 .All(rule => rule.Value.IsMatch(passport[rule.Key])));
 
-        return new Solution(partA, partB);
+        return new Solution($"{partA}", $"{partB}");
     }
 
     private static IEnumerable<string> GroupByBlankLines(this IEnumerable<string> lines)

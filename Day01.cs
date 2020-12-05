@@ -39,7 +39,7 @@ internal static class Day01
             }
         }
 
-        return new Solution(partA, partB);
+        return new Solution($"{partA}", $"{partB}");
     }
 
 }

@@ -23,7 +23,7 @@ internal static class Day03
             .Select(move => Traverse(move, lines))
             .Aggregate((current, next) => current * next);
 
-        return new Solution(partA, partB);
+        return new Solution($"{partA}", $"{partB}");
     }
 
     /// <summary>
