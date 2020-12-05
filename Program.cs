@@ -3,6 +3,7 @@ using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Diagnostics;
 using System.IO;
+using Spectre.Console;
 
 var rootCommand = new RootCommand
 {
@@ -20,57 +21,53 @@ rootCommand.Handler = CommandHandler.Create<int, string>((day, dir) =>
     // validate day
     if (day < 1 || day > 25)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("Specified day must be between one and twenty five");
-        Console.ResetColor();
+        AnsiConsole.Render(new Markup(":stop_sign: Specified [bold red]day[/] must be between one and twenty five."));
         return 87;
     }
 
     // read input if available
     var path = Path.Combine(dir, $"Day{day:00}.txt");
-    if (!File.Exists(path))
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine($"Day '{day}' input not found");
-        Console.ResetColor();
-        return 2;
-    }
-    var input = File.ReadAllLines(path);
+    var input = File.Exists(path) ? File.ReadAllLines(path) : new string[0];
 
     // solve the specified day
+    Console.WriteLine();
     var stopwatch = Stopwatch.StartNew();
     Solution solution;
     switch (day)
     {
         case 1:
-            Console.WriteLine("--- Day 1: Report Repair ---");
+            AnsiConsole.Render(new Rule("Day 1: Report Repair") { Alignment = Justify.Left });
             solution = Day01.Run(input);
             break;
         case 2:
-            Console.WriteLine("--- Day 2: Password Philosophy ---");
+            AnsiConsole.Render(new Rule("Day 1: Password Philosophy") { Alignment = Justify.Left });
             solution = Day02.Run(input);
             break;
         case 3:
-            Console.WriteLine("--- Day 3: Toboggan Trajectory ---");
+            AnsiConsole.Render(new Rule("Day 1: Toboggan Trajectory") { Alignment = Justify.Left });
             solution = Day03.Run(input);
             break;
         case 4:
-            Console.WriteLine("--- Day 4: Passport Processing ---");
+            AnsiConsole.Render(new Rule("Day 4: Passport Processing") { Alignment = Justify.Left });
             solution = Day04.Run(input);
             break;
         default:
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Day '{day}', has not been solved yet.");
-            Console.ResetColor();
+            AnsiConsole.Render(new Markup($":warning: [bold yellow]Day '{day}', has not been solved yet.[/]"));
             return 87;
     }
 
     // write solution to console
-    Console.WriteLine($" - A: {solution.PartA}");
-    Console.WriteLine($" - B: {solution.PartB}");
-    Console.ForegroundColor = ConsoleColor.DarkGreen;
-    Console.WriteLine($"--- Finished in ({stopwatch.ElapsedMilliseconds}) ms ---");
-    Console.ResetColor();
+    var table = new Table();
+    table.AddColumn("Part I");
+    table.AddColumn("Part II");
+    table.AddRow($"{solution.PartA}", $"{solution.PartB}");
+    AnsiConsole.Render(table);
+
+    AnsiConsole.Render(new Rule());
+
+    AnsiConsole.Render(new Markup($":stopwatch: [bold green]Finished[/] in {stopwatch.ElapsedMilliseconds} ms."));
+    Console.WriteLine();
+    Console.WriteLine();
     return 0;
 
 });
