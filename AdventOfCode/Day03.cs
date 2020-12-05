@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-internal static class Day03
+public static class Day03
 {
 
     /// <summary>

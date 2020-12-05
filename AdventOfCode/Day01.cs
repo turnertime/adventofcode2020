@@ -1,7 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
-internal static class Day01
+public static class Day01
 {
 
     /// <summary>

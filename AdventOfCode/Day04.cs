@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-internal static class Day04
+public static class Day04
 {
 
     /// <summary>

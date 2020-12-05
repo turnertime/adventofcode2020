@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 
-internal static class Day05
+public static class Day05
 {
 
     /// <summary>

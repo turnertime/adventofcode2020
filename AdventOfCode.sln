@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode", "AdventOfCode\AdventOfCode.csproj", "{4BBAF265-F211-4280-9322-DCBB779CD297}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Tests", "AdventOfCode.Tests\AdventOfCode.Tests.csproj", "{9C29F418-7194-4328-8DB6-2E1D4EC101CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{4BBAF265-F211-4280-9322-DCBB779CD297}.Release|x64.Build.0 = Release|Any CPU
 		{4BBAF265-F211-4280-9322-DCBB779CD297}.Release|x86.ActiveCfg = Release|Any CPU
 		{4BBAF265-F211-4280-9322-DCBB779CD297}.Release|x86.Build.0 = Release|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Debug|x64.Build.0 = Debug|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Debug|x86.Build.0 = Debug|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Release|x64.ActiveCfg = Release|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Release|x64.Build.0 = Release|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Release|x86.ActiveCfg = Release|Any CPU
+		{9C29F418-7194-4328-8DB6-2E1D4EC101CF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

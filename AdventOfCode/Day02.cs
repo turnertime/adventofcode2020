@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-internal static class Day02
+public static class Day02
 {
 
     /// <summary>
