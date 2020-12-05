@@ -30,7 +30,6 @@ rootCommand.Handler = CommandHandler.Create<int, string>((day, dir) =>
     var input = File.Exists(path) ? File.ReadAllLines(path) : new string[0];
 
     // solve the specified day
-    Console.WriteLine();
     var stopwatch = Stopwatch.StartNew();
     Solution solution;
     switch (day)
@@ -51,6 +50,10 @@ rootCommand.Handler = CommandHandler.Create<int, string>((day, dir) =>
             AnsiConsole.Render(new Rule("Day 4: Passport Processing") { Alignment = Justify.Left });
             solution = Day04.Run(input);
             break;
+        case 5:
+            AnsiConsole.Render(new Rule("Day 5: Binary Boarding") { Alignment = Justify.Left });
+            solution = Day05.Run(input);
+            break;
         default:
             AnsiConsole.Render(new Markup($":warning: [bold yellow]Day '{day}', has not been solved yet.[/]"));
             return 87;
@@ -62,12 +65,7 @@ rootCommand.Handler = CommandHandler.Create<int, string>((day, dir) =>
     table.AddColumn("Part II");
     table.AddRow($"{solution.PartA}", $"{solution.PartB}");
     AnsiConsole.Render(table);
-
-    AnsiConsole.Render(new Rule());
-
     AnsiConsole.Render(new Markup($":stopwatch: [bold green]Finished[/] in {stopwatch.ElapsedMilliseconds} ms."));
-    Console.WriteLine();
-    Console.WriteLine();
     return 0;
 
 });
