@@ -5,6 +5,7 @@ using System.CommandLine.Invocation;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using AdventOfCode;
 using Spectre.Console;
 
 var rootCommand = new RootCommand
@@ -35,15 +36,26 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
     );
 
     ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)> results = ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)>.Empty;
-    AnsiConsole.Progress()
+    AnsiConsole
+        .Progress()
+        .Columns(new ProgressColumn[]
+        {
+            new JustifiedTaskDescriptionColumn { Alignment = Justify.Left },    // Task description
+            new ProgressBarColumn(),
+            new PercentageColumn(),
+            new ElapsedTimeColumn { Format = "ss\\:ffffff" },
+            new SpinnerColumn()
+        })
         .Start(ctx =>
         {
-            results = solutions
+            var tasks = solutions
                 .Select(solution => new SolutionProgress(
                     ctx.AddTask($"[green]Day {solution.Day}[/] : {solution.Name}"),
                     solution,
-                    Path.Combine(dir, $"Day{solution.Day:00}.txt")
-                ))
+                    Path.Combine(dir, $"Day{solution.Day:00}.txt")))
+                .ToImmutableArray();
+
+            results = tasks
                 .Select(solution =>
                 {
                     var input = File.ReadAllText(solution.Path);

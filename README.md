@@ -13,8 +13,10 @@ dotnet build
 ## 🏃‍♀️ Run Steps
 
 ```powershell
-dotnet run 1 # runs day 1 problems
+dotnet run --project .\AdventOfCode\AdventOfCode.csproj
 ```
+
+![RunExample](RunExample.png)
 
 ## 🧹 Format Code
 
