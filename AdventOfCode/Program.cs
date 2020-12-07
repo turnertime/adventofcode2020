@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Spectre.Console;
 
 var rootCommand = new RootCommand
@@ -15,60 +17,65 @@ var rootCommand = new RootCommand
 
 rootCommand.Description = "Solve Advent of Code 2020 Problem";
 
-rootCommand.Handler = CommandHandler.Create<int, string>((day, dir) =>
+rootCommand.Handler = CommandHandler.Create<string>(dir =>
 {
-    // validate day
-    if (day < 1 || day > 25)
-    {
-        AnsiConsole.Markup(":stop_sign: Specified [bold red]day[/] must be between one and twenty five.");
-        return 87;
-    }
+    AnsiConsole.Render(
+    new FigletText("ADVENT OF CODE")
+        .LeftAligned()
+        .Color(Color.Red));
 
-    // read input if available
-    var path = Path.Combine(dir, $"Day{day:00}.txt");
-    var input = File.Exists(path) ? File.ReadAllText(path) : "";
+    var solutions = ImmutableArray.Create(
+        Day01.Solution,
+        Day02.Solution,
+        Day03.Solution,
+        Day04.Solution,
+        Day05.Solution,
+        Day06.Solution,
+        Day07.Solution
+    );
 
-    // solve the specified day
-    var stopwatch = Stopwatch.StartNew();
-    Solution solution;
-    switch (day)
-    {
-        case 1:
-            AnsiConsole.Render(new Rule("Day 1: Report Repair") { Alignment = Justify.Left });
-            solution = new Solution(Day01.Solution.PartI(input), Day01.Solution.PartII(input));
-            break;
-        case 2:
-            AnsiConsole.Render(new Rule("Day 2: Password Philosophy") { Alignment = Justify.Left });
-            solution = new Solution(Day02.Solution.PartI(input), Day01.Solution.PartII(input));
-            break;
-        case 3:
-            AnsiConsole.Render(new Rule("Day 3: Toboggan Trajectory") { Alignment = Justify.Left });
-            solution = new Solution(Day03.Solution.PartI(input), Day01.Solution.PartII(input));
-            break;
-        case 4:
-            AnsiConsole.Render(new Rule("Day 4: Passport Processing") { Alignment = Justify.Left });
-            solution = new Solution(Day04.Solution.PartI(input), Day01.Solution.PartII(input));
-            break;
-        case 5:
-            AnsiConsole.Render(new Rule("Day 5: Binary Boarding") { Alignment = Justify.Left });
-            solution = new Solution(Day05.Solution.PartI(input), Day01.Solution.PartII(input));
-            break;
-        default:
-            AnsiConsole.Render(new Markup($":warning: [bold yellow]Day '{day}', has not been solved yet.[/]"));
-            return 87;
-    }
+    ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)> results = ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)>.Empty;
+    AnsiConsole.Progress()
+        .Start(ctx =>
+        {
+            results = solutions
+                .Select(solution => new SolutionProgress(
+                    ctx.AddTask($"[green]Day {solution.Day}[/] : {solution.Name}"),
+                    solution,
+                    Path.Combine(dir, $"Day{solution.Day:00}.txt")
+                ))
+                .Select(solution =>
+                {
+                    var input = File.ReadAllText(solution.Path);
+                    solution.Progress.Increment(30);
+                    var stopwatch = Stopwatch.StartNew();
+                    var partI = solution.Solution.PartI(input);
+                    solution.Progress.Increment(30);
+                    var partII = solution.Solution.PartII(input);
+                    stopwatch.Stop();
+                    solution.Progress.Increment(40);
+                    return (solution.Solution, PartI: partI, PartII: partII, Timing: stopwatch.Elapsed);
+                })
+                .ToImmutableArray();
+        });
 
     // write solution to console
     var table = new Table();
+    table.AddColumn("Day");
     table.AddColumn("Part I");
     table.AddColumn("Part II");
-    table.AddRow($"{solution.PartA}", $"{solution.PartB}");
+    table.AddColumn("Time (ms)");
+    foreach (var result in results)
+    {
+        table.AddRow(
+            $"{result.Solution.Day} : {result.Solution.Name}",
+            $"{result.PartI}",
+            $"{result.PartII}",
+            $"{result.Timing.TotalMilliseconds}");
+    }
     AnsiConsole.Render(table);
-    AnsiConsole.Markup($":stopwatch: [bold green]Finished[/] in {stopwatch.ElapsedMilliseconds} ms.");
-    return 0;
 
+    return 0;
 });
 
 return rootCommand.InvokeAsync(args).Result;
-
-
