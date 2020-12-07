@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace AdventOfCode.Tests
 {
@@ -9,12 +11,12 @@ namespace AdventOfCode.Tests
         [Test]
         public static void Run_AssertExpectedOutput()
         {
-            var input = TestUtilities.ReadInputLines(1);
+            var input = File.ReadAllText(TestUtilities.GetInputPath(1));
+            var partI = Day01.Solution.PartI(input);
+            var partII = Day01.Solution.PartII(input);
 
-            var solution = Day01.Run(input);
-
-            Assert.AreEqual("926464", solution.PartA);
-            Assert.AreEqual("65656536", solution.PartB);
+            Assert.AreEqual("926464", partI);
+            Assert.AreEqual("65656536", partII);
         }
 
     }

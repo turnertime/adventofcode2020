@@ -5,30 +5,35 @@ using System.Linq;
 public static class Day05
 {
 
-    /// <summary>
-    /// <a href="https://adventofcode.com/2020/day/5">Day 5</a>: Binary Boarding
-    /// </summary>
-    public static Solution Run(string[] lines)
-    {
-        var seats = lines
+    public static AdventSolution Solution = new AdventSolution(
+        Day: 5,
+        Name: "Binary Boarding",
+        PartI: input => input
+            .SplitLines()
             .Select(line => CalculateSeat(
                 SearchSeat(line.Substring(0, 7), 0, 127, isRow: true),
                 SearchSeat(line.Substring(7, 3), 0, 7, isRow: false)))
-            .ToImmutableHashSet();
-
-        var partA = seats.Max();
-
-        var partB = Enumerable.Range(0, 127)
-            .SelectMany(row => Enumerable
-                .Range(0, 8)
-                .Select(column => CalculateSeat(row, column)))
-            .Where(seatId => !seats.Contains(seatId)
-                && seats.Contains(seatId + 1)
-                && seats.Contains(seatId - 1))
-            .Single();
-
-        return new Solution($"{partA}", $"{partB}");
-    }
+            .Max()
+            .ToString(),
+        PartII: input =>
+        {
+            var seats = input
+                .SplitLines()
+                .Select(line => CalculateSeat(
+                    SearchSeat(line.Substring(0, 7), 0, 127, isRow: true),
+                    SearchSeat(line.Substring(7, 3), 0, 7, isRow: false)))
+                .ToImmutableHashSet();
+            return Enumerable
+                .Range(0, 127)
+                .SelectMany(row => Enumerable
+                    .Range(0, 8)
+                    .Select(column => CalculateSeat(row, column)))
+                        .Where(seatId => !seats.Contains(seatId)
+                            && seats.Contains(seatId + 1)
+                            && seats.Contains(seatId - 1))
+                        .Single()
+                        .ToString();
+        });
 
     /// <summary>
     /// Computes the seat ID from the row and column.

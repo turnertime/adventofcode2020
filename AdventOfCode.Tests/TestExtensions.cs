@@ -3,18 +3,24 @@ using NUnit.Framework;
 
 namespace AdventOfCode.Tests
 {
+
     internal static class TestUtilities
     {
 
-        public static string[] ReadInputLines(int day)
+        public static string GetInputPath(int day)
         {
-            var inputPath = Path.Combine(
+            return Path.Combine(
                 TestContext.CurrentContext.TestDirectory,
                 $"../../../../input/Day{day:00}.txt");
-            Assert.IsTrue(File.Exists(inputPath), $"Required, advent day input '{inputPath}' does not exist.");
+        }
 
+        public static string[] ReadInputLines(int day)
+        {
+            var inputPath = GetInputPath(day);
+            Assert.IsTrue(File.Exists(inputPath), $"Required, advent day input '{inputPath}' does not exist.");
             return File.ReadAllLines(inputPath);
         }
 
     }
+
 }

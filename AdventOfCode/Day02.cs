@@ -5,12 +5,11 @@ using System.Text.RegularExpressions;
 public static class Day02
 {
 
-    /// <summary>
-    /// <a href="https://adventofcode.com/2020/day/2">Day 2</a>: Password Philosophy
-    /// </summary>
-    public static Solution Run(string[] lines)
-    {
-        var partA = lines
+    public static AdventSolution Solution = new AdventSolution(
+        Day: 2,
+        Name: "Password Philosophy",
+        PartI: input => input
+            .SplitLines()
             .Select(line => PasswordPattern.Match(line))
             .Select(pattern => (
                 min: int.Parse(pattern.Groups["min"].Value),
@@ -21,10 +20,10 @@ public static class Day02
             {
                 var occurrences = pattern.password.Count(c => c == pattern.character);
                 return occurrences >= pattern.min && occurrences <= pattern.max;
-            });
-
-
-        var partB = lines
+            })
+            .ToString(),
+        PartII: input => input
+            .SplitLines()
             .Select(line => PasswordPattern.Match(line))
             .Select(pattern => (
                 first: int.Parse(pattern.Groups["min"].Value),
@@ -37,10 +36,9 @@ public static class Day02
                 var second = pattern.character == pattern.password[pattern.second - 1] ? 1 : 0;
 
                 return first + second == 1;
-            });
-
-        return new Solution($"{partA}", $"{partB}");
-    }
+            })
+            .ToString()
+    );
 
     private static Regex PasswordPattern = new Regex(
         @"^(?<min>\d+)-(?<max>\d+) (?<character>.): (?<password>.+)$",
