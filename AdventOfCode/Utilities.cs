@@ -16,7 +16,7 @@ public static class Utilities
     /// <summary>
     /// Splits the specified string by new line.
     /// </summary>
-    public static IImmutableList<string> SplitLines(this string value)
+    public static ImmutableArray<string> SplitLines(this string value)
     {
         return value is null
             ? ImmutableArray<string>.Empty

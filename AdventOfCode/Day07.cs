@@ -8,7 +8,7 @@ public static class Day07
 
     public static AdventSolution Solution = new AdventSolution(
         Day: 7,
-        Name: "Custom Customs",
+        Name: "Handy Haversacks",
         PartI: input =>
         {
             var bagRegex = new Regex("[a-z]+ [a-z]+ bag", RegexOptions.IgnoreCase);
