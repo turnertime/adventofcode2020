@@ -41,7 +41,8 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
         Day13.Solution,
         Day14.Solution,
         Day15.Solution,
-        Day16.Solution
+        Day16.Solution,
+        Day17.Solution
     );
 
     ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)> results = ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)>.Empty;
@@ -84,10 +85,13 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
 
     // write solution to console
     var table = new Table();
+    table.Border(TableBorder.Ascii);
+    table.Width(83);
     table.AddColumn("Day");
     table.AddColumn("Part I");
     table.AddColumn("Part II");
     table.AddColumn("Time (ms)");
+    table.Columns.Last().RightAligned();
     foreach (var result in results)
     {
         table.AddRow(
