@@ -36,7 +36,8 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
         Day08.Solution,
         Day09.Solution,
         Day10.Solution,
-        Day11.Solution
+        Day11.Solution,
+        Day12.Solution
     );
 
     ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)> results = ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)>.Empty;
@@ -44,7 +45,7 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
         .Progress()
         .Columns(new ProgressColumn[]
         {
-            new JustifiedTaskDescriptionColumn { Alignment = Justify.Left },    // Task description
+            new JustifiedTaskDescriptionColumn { Alignment = Justify.Left },
             new ProgressBarColumn(),
             new PercentageColumn(),
             new ElapsedTimeColumn { Format = "ss\\:ffffff" },
@@ -62,6 +63,7 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
             results = tasks
                 .Select(solution =>
                 {
+                    solution.Progress.StartTask();
                     var input = File.ReadAllText(solution.Path);
                     solution.Progress.Increment(30);
                     var stopwatch = Stopwatch.StartNew();
@@ -70,6 +72,7 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
                     var partII = solution.Solution.PartII(input);
                     stopwatch.Stop();
                     solution.Progress.Increment(40);
+                    solution.Progress.StopTask();
                     return (solution.Solution, PartI: partI, PartII: partII, Timing: stopwatch.Elapsed);
                 })
                 .ToImmutableArray();
