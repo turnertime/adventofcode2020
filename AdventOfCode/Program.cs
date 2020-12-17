@@ -37,7 +37,8 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
         Day09.Solution,
         Day10.Solution,
         Day11.Solution,
-        Day12.Solution
+        Day12.Solution,
+        Day13.Solution
     );
 
     ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)> results = ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)>.Empty;
