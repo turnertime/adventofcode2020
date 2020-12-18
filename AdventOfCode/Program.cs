@@ -38,7 +38,8 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
         Day10.Solution,
         Day11.Solution,
         Day12.Solution,
-        Day13.Solution
+        Day13.Solution,
+        Day14.Solution
     );
 
     ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)> results = ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)>.Empty;
@@ -56,7 +57,7 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
         {
             var tasks = solutions
                 .Select(solution => new SolutionProgress(
-                    ctx.AddTask($"[green]Day {solution.Day}[/] : {solution.Name}"),
+                    ctx.AddTask($"[green]Day {solution.Day:00}[/] : {solution.Name}"),
                     solution,
                     Path.Combine(dir, $"Day{solution.Day:00}.txt")))
                 .ToImmutableArray();
@@ -88,7 +89,7 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
     foreach (var result in results)
     {
         table.AddRow(
-            $"{result.Solution.Day} : {result.Solution.Name}",
+            $"{result.Solution.Day:00} : {result.Solution.Name}",
             $"{result.PartI}",
             $"{result.PartII}",
             $"{result.Timing.TotalMilliseconds}");

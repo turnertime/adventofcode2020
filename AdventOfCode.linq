@@ -10,8 +10,4 @@ static void Main()
 	var day = 13;
 	var path = Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), $"input/Day{day:00}.txt");
 	var lines = System.IO.File.ReadAllLines(path);
-
 }
-
-
-

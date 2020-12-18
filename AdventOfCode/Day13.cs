@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
-using System.Drawing;
+﻿using System.Collections.Immutable;
 using System.Linq;
 
 public static class Day13
