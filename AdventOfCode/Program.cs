@@ -5,6 +5,7 @@ using System.CommandLine.Invocation;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using AdventOfCode;
 using Spectre.Console;
 
@@ -18,7 +19,7 @@ var rootCommand = new RootCommand
 
 rootCommand.Description = "Solve Advent of Code 2020 Problem";
 
-rootCommand.Handler = CommandHandler.Create<string>(dir =>
+rootCommand.Handler = CommandHandler.Create<string>(async dir =>
 {
     AnsiConsole.Render(
     new FigletText("ADVENT OF CODE")
@@ -48,7 +49,7 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
     );
 
     var results = ImmutableArray<(AdventSolution Solution, string PartI, string PartII, TimeSpan Timing)>.Empty;
-    AnsiConsole
+    await AnsiConsole
         .Progress()
         .Columns(new ProgressColumn[]
         {
@@ -58,52 +59,52 @@ rootCommand.Handler = CommandHandler.Create<string>(dir =>
             new ElapsedTimeColumn { Format = "ss\\:ffffff" },
             new SpinnerColumn()
         })
-        .Start(ctx =>
+        .StartAsync(async ctx =>
         {
             var tasks = solutions
                 .Select(solution => new SolutionProgress(
                     ctx.AddTask($"[green]Day {solution.Day:00}[/] : {solution.Name}"),
                     solution,
                     Path.Combine(dir, $"Day{solution.Day:00}.txt")))
-                .ToImmutableArray();
-
-            results = tasks
                 .Select(solution =>
                 {
-                    solution.Progress.StartTask();
-                    var input = File.ReadAllText(solution.Path);
-                    solution.Progress.Increment(30);
-                    var stopwatch = Stopwatch.StartNew();
-                    var partI = solution.Solution.PartI(input);
-                    solution.Progress.Increment(30);
-                    var partII = solution.Solution.PartII(input);
-                    stopwatch.Stop();
-                    solution.Progress.Increment(40);
-                    solution.Progress.StopTask();
-                    return (solution.Solution, PartI: partI, PartII: partII, Timing: stopwatch.Elapsed);
-                })
-                .ToImmutableArray();
+                    return Task.Factory.StartNew(() =>
+                    {
+                        solution.Progress.StartTask();
+                        var input = File.ReadAllText(solution.Path);
+                        solution.Progress.Increment(30);
+                        var stopwatch = Stopwatch.StartNew();
+                        var partI = solution.Solution.PartI(input);
+                        solution.Progress.Increment(30);
+                        var partII = solution.Solution.PartII(input);
+                        stopwatch.Stop();
+                        solution.Progress.Increment(40);
+                        solution.Progress.StopTask();
+                        results = results.Add((solution.Solution, PartI: partI, PartII: partII, Timing: stopwatch.Elapsed));
+                    });
+                });
+            await Task.WhenAll(tasks);
+        })
+        .ContinueWith(_ =>
+        {
+            var table = new Table();
+            table.Border(TableBorder.Ascii);
+            table.Width(83);
+            table.AddColumn("Day");
+            table.AddColumn("Part I");
+            table.AddColumn("Part II");
+            table.AddColumn("Time (ms)");
+            table.Columns[^1].RightAligned();
+            foreach (var result in results.OrderBy(result => result.Solution.Day))
+            {
+                table.AddRow(
+                    $"{result.Solution.Day:00} : {result.Solution.Name}",
+                    $"{result.PartI}",
+                    $"{result.PartII}",
+                    $"{result.Timing.TotalMilliseconds}");
+            }
+            AnsiConsole.Render(table);
         });
-
-    // write solution to console
-    var table = new Table();
-    table.Border(TableBorder.Ascii);
-    table.Width(83);
-    table.AddColumn("Day");
-    table.AddColumn("Part I");
-    table.AddColumn("Part II");
-    table.AddColumn("Time (ms)");
-    table.Columns.Last().RightAligned();
-    foreach (var result in results)
-    {
-        table.AddRow(
-            $"{result.Solution.Day:00} : {result.Solution.Name}",
-            $"{result.PartI}",
-            $"{result.PartII}",
-            $"{result.Timing.TotalMilliseconds}");
-    }
-    AnsiConsole.Render(table);
-
     return 0;
 });
 
