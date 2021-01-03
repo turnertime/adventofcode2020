@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Drawing;
 using System.Linq;
+using AdventOfCode;
 
 public static class Day11
 {

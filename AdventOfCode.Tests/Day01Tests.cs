@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace AdventOfCode.Tests

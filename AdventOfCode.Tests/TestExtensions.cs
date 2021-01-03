@@ -14,13 +14,6 @@ namespace AdventOfCode.Tests
                 $"../../../../input/Day{day:00}.txt");
         }
 
-        public static string[] ReadInputLines(int day)
-        {
-            var inputPath = GetInputPath(day);
-            Assert.IsTrue(File.Exists(inputPath), $"Required, advent day input '{inputPath}' does not exist.");
-            return File.ReadAllLines(inputPath);
-        }
-
     }
 
 }

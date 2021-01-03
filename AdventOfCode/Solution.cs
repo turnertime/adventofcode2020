@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using AdventOfCode;
+using Spectre.Console;
 /// <summary>
 /// Defines the solution to part I and II.
 /// </summary>

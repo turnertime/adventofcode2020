@@ -7,6 +7,7 @@
 
 static void Main()
 {
-	var day = 18;
+	var day = 20;
 	var lines = System.IO.File.ReadAllLines(Path.Combine(Path.GetDirectoryName(Util.CurrentQueryPath), $"input/Day{day:00}.txt"));
+
 }

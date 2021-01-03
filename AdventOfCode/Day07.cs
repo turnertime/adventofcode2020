@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
+using AdventOfCode;
 
 public static class Day07
 {

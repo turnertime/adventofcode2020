@@ -16,7 +16,7 @@ namespace AdventOfCode
         /// <inheritdoc/>
         public override IRenderable Render(RenderContext context, ProgressTask task, TimeSpan deltaTime)
         {
-            var text = task.Description?.RemoveNewlines()?.Trim();
+            var text = task.Description.RemoveNewlines()?.Trim();
             return new Markup(text ?? string.Empty)
                 .Overflow(Overflow.Ellipsis)
                 .Alignment(Alignment);
@@ -32,12 +32,13 @@ namespace AdventOfCode
 
         /// <summary>
         /// Indicates the format of elapsed <see cref="TimeSpan" />.
+        /// </summary>
         public string Format { get; init; }
 
         /// <summary>
         /// Gets or sets the style of the remaining time text.
         /// </summary>
-        public Style Style { get; set; } = new Style(foreground: Color.Blue);
+        private Style Style { get; } = new(Color.Blue);
 
         /// <inheritdoc/>
         public override IRenderable Render(
